@@ -1,0 +1,28 @@
+The TyStudio team is proud to announce TyStudio v 0.5.0! TyStudio is a
+set of tools whose purpose is to allow one to easily and painlessly
+extract video streams from any tivo, and convert them to perfectly
+legal, industry standard video formats. Other features include editing
+video without having to extract it first, and automatic conversion of
+the audio format to be DVD and VCD compliant as desired.
+
+TyStudio, and all of its components and libraries, are available for 
+free under the GPL license. You can obtain every component of TyStudio,
+including the sources, from www.sourceforge.net/projects/dvd-create.
+
+Please note that this initial release is to be considered beta software.
+That said, there are a few things to be noted about this release:
+
+- Currently there is no series 2 tivo support, although it is planned to
+  come soon, we do not have any dev'ers who own these units to do the
+  porting.
+  
+- There are known issues with audio sync when converting the audio to
+  44.1khz. This is being worked on, and its a high priority.
+  
+- Tystreams extracted with jdiners tytool have a bug in them that
+  prevents the tydemux component from reading them correctly. It's known
+  how to fix it, but it's not currently one of our priorities.
+  
+- No frame accurate editing. It will come with time, but it's not 
+  currently a priority. Meanwhile you can use non re-encoding frame
+  accurate software such as womble mpeg-vcr instead.

@@ -1,0 +1,1093 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Win32)">
+	<META NAME="CREATED" CONTENT="20030130;8440300">
+	<META NAME="CHANGED" CONTENT="20030131;18024300">
+	<STYLE>
+	<!--
+		@page { size: 21.59cm 27.94cm; margin-left: 3.18cm; margin-right: 3.18cm; margin-top: 2.54cm; margin-bottom: 2.54cm }
+		P { margin-bottom: 0.21cm; page-break-before: auto }
+		P.western { font-family: "Courier", monospace; font-weight: medium }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US">
+<P CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm"><FONT FACE="Courier, monospace"><B>Tydemux</B></FONT></P>
+<P CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm"><FONT FACE="Courier, monospace"><B>Road
+map / Todo sketch</B></FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">The document aims to describe what to
+become of the tydemux project in order to take it to the next step in
+form of usability and functionality. It's also providing a sketch of
+what needs to be implemented in order to reach the goals both in
+terms of out line algorithms and possible open source code bases that
+could be utilized. We should try to use as much open source code from
+other project as possible    in order to minimize development time.
+However the code we take should be of good quality and properly
+documented otherwise we will just end up with a lot of unmaintaible
+code. </FONT>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Preliminary goals for the two next up
+coming versions of the tydemux project. </FONT>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">0.5.0:</FONT></P>
+<UL>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Internal muxing of audio and video,
+	supporting the STD, SVCD and DVD MPEG standards</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm">Creation
+	of VTS and VIDEO_TS IFO/BUP files in case we are muxing to DVD MPEG
+	standard.</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm">Creation
+	of cell structure with in the DVD VOB &ndash; hence supporting next
+	and previous buttons on a DVD player but not chapters</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm"><SPAN STYLE="font-weight: medium"><FONT FACE="Courier, monospace">Internal
+	audio </FONT></SPAN>transcoding 
+	</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Extend the way of reading tystreams
+	&ndash; i.e. socket, stdin, fifo support </FONT>
+	</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Code cleanup, threading and
+	profiling </FONT>
+	</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">GUI front end acting both a editor
+	and as a front end to the actual demuxing/remuxing operation</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Support of the tytar format</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Fix of all outstanding bugs ;)</FONT></P>
+</UL>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">0.6.0:</FONT></P>
+<UL>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Direct generation of DVD iso images</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Generation of DVD chapters and menus
+	accessing those chapters (i.e. DVD Menu creation)</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Generation of DVD subtitles rendered
+	from CC (or TT data if possible) data present in the tystream.</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Generation of mulititle DVD's i.e.
+	several recordings on the same DVD accessible from a top level menu</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Possible GUI front end to the above
+	functionality</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Tydemux server on the Tivo for
+	direct transport and management of tystreams</FONT></P>
+</UL>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Techinical description of how to
+reach the above stated goals.</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Description of 0.5.0 goals:</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Internal muxing:</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">The internal muxing will be based on
+mplex from mjpeg-tools, it's simply the most feature complete and the
+most accurate open source mpeg system stream multiplexer currently
+present. </FONT>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">We already have &ldquo;crude&rdquo;
+ports of mplex to windows based on the latest 1.6.0 release of
+mjpeg-tools. What is needed be done here is to get the latest CVS
+version of mplex (present in the mjpeg-play module in the mjpeg tool
+CVS server at SourceForge), and port it to Windows (and Linux). This
+includes creation of VC6 project files and Unix make files since we
+can't use mjpeg-tools building system. </FONT>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">We must also alter mplex i.e. so we
+can call it from tydemux hence we need to make it into a lib. The
+fuctions needed is:</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<UL>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A way to tell mplex to halt the mux
+	since we need to demux more data</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A way for mplex to read the demuxed
+	data originating from tydemux &ndash; I suggest feeding mplex with
+	either a memory buffer controlled by tydemux or let it read from 
+	FIFO:s.</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A way to skip the init of mplex
+	hence the probe functionality of mplex must be bipassed. Tydemux
+	will instead populate the data structures that mplex needs in order
+	to mux the streams </FONT>
+	</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A way of telling mplex what type of
+	mux we want</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A way of telling mplex what file to
+	write to</FONT></P>
+</UL>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Creation of VTS and VIDEO_TS IFO/BUP
+files:</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">This can be done in two alternative
+ways either we extend mplex to create the necessary information in
+the privet steam 2 PCI/DCI packets or we have a separate function
+that is scanning the muxed stream created by mplex. The latter one is
+probably the simplest approach  it's done by e.g. the dvd-author
+program. We also need this scanning function to later on create/alter
+button definitions and commands in the private stream 2.</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">The information present in the
+PCI/DSI packets are also a necessary for the creation of the VTS
+IFO/BUP file hence my suggestion is that we go with a separate
+routine  at least for the time being. Hence what is needed to archive
+this goal is:</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<UL>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A way to scan the resulting muxed
+	stream while it's under creation. </FONT>
+	</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A way to populate the muxed stream
+	PCI/DSI packets while it's under creation</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A way to store the information
+	created during the two steps above and from this information create
+	the VTS IFO and BUP file</FONT></P>
+	<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	</P>
+</UL>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Creation of cell structure with in
+the DVD VOB:</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">This is just an extension of the
+aforementioned IFO/BUP file creation it's a relatively simple
+operation compared to the aforementioned one. However I don't suggest
+that we take the dvd-author code and simply integrate it. The code is
+not documented at all and it's very crude (and to some extent buggy).
+Instead I suggest that we (Olaf) implement the bare minimum of
+functionality to libifoedit. Libifoedit is a better way to go in the
+long run and it will scale to the needs we have for 0.6.0. Hence both
+the aforementioned IFO/BUP creation as well as cell structure
+creation will be made with help of libifoedit.  Hence what is needed
+to archive this goal is:</FONT></P>
+<UL>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Implement the bare minimum of
+	functionality to libifoedit. This includes the IFO/BUP file
+	creations functions as well as a way to populate the PCI/DSI packets
+	and the IFO with the necessary information to support next and
+	previous skips in a std alone DVD player.</FONT></P>
+</UL>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Internal audio trans coding:</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Rowan is the main architect of this
+part of the project. He has made good progress and we have  fully
+functional high quality MPEG audio trans coder library and front end
+called tytranscode. What is remaining is to support AC3/a52 trans
+coding. </FONT>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+<SPAN STYLE="font-weight: medium"><FONT FACE="Courier, monospace">(My
+own personal notes: If I fully understand the lib then it's very easy
+to use. Basically feed the audio frames to the AudioInputFrame</FONT></SPAN>
+instead of writing to disk then collect trans coded frames with
+AudioGetOutPutFrame until the function returns NULL. Continue to do
+this operation until the stream is finished where you can if you want
+use AudioGetLastFrame to fetch the last sound clip that might just be
+half full. 
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+Basically if we have made all sync corrections before calling
+InputFrame / OutPutFrame we will be home free since we will never add
+any &ldquo;time&rdquo; to the audio stream  (unless we use GetLast
+which we should not do). )</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+Since we have full control of the audio format with help of the
+<SPAN STYLE="font-weight: medium"><FONT FACE="Courier, monospace">AudioInitMpegAudioConverter
+func we will have no problem feeding those audio variables to the
+mplex (what about frame size and play time for each frame? - if I'm
+not totally incorrect mplex needs those in order to mux &ndash;
+remember we will not probe the stream with mplex but set the values
+our self.</FONT></SPAN></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+ 
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">(My own personal notes: In regards to
+silent frames and the case of adding frames to compensate for sync
+drift in the audio stream. I most probably don't want to create
+silent audio frames of the format that we transcode to but I think a
+good idea is to init two instances of the transcode one &ldquo;one to
+one format&rdquo; and one &ldquo;one to another format&rdquo; (if we
+don't trans code we will just init a &ldquo;one to one format&rdquo;).</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Anyhow when we detect sync errors in
+the audio stream &ndash; i.e. missing frames then we will just call
+the &ldquo;one to one format&rdquo; instance and request X number of
+silent frames needed to mend the error. The advantage of doing it
+with the &ldquo;one to one format&rdquo; instance is that we don't
+need to worry about facts such as one frame is mapping to say 0.75
+frames in the new format.)</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Extend the way of reading tystreams &ndash;
+i.e. socket, stdin, fifo support:</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Docket and stdin is input only ways
+of reading tystreams and fifo is both input and output read/write &ndash;
+well we can write to stdout if we mux but it's kind of hard to write
+to stdout if we just demux &ndash; two streams you know.</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">The issue of not reading from a file
+is that we 1: don't know the size of the stream, 2: We don't know
+what the stream contains in from of audio and video parameters. Now
+we could sample some of it when we read from socket/fifo/stdin. But
+we must provide the users with a method of setting at least one
+crucial fact namely if we have AC3 or MPEG sound (the rest can be
+sampled from the input &ndash; although it could be nice to provide
+switches for it). Hence what is needed to archive this goal is:</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<UL>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A revamped read chunk function it
+	will need to be able to read form all supported sources. </FONT>
+	</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A revamped probe (collector)
+	functions so that they work regardless of what type of input we use</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A revamped skip to requested audio
+	format function</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm">Revamped
+	write functionality so that we can write to at least to fifo and
+	file</P>
+</UL>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+In regards to socket support I would like to say that we should write
+it in such way that we are open for the future extensions such as the
+tyserver running on the Tivo (0.6.0)</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+Open source code for handing all of this can be found in ffmpeg,
+mplayer and the video lan project (see links).</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Code cleanup, threading and
+profiling:</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+<SPAN STYLE="font-weight: medium"><FONT FACE="Courier, monospace">Large
+parts of the code cleanup is done (remains to port 0.4.x fixes up to
+the CVS version) we have grouped similar functionality in to sets of
+files beginning with the same name. The tydemux.h header file holds
+all functions present in tydemux and they are properly documented.
+There should be know problem to generate a high quality documentation
+from it with doxygen (spell checking still needs to be done through
+out tydemux &ndash; any one? - is so please register at source forge
+and email us at the list). However there is still work that needs to
+be done mainly code duplication unnessesay functions and so on.</FONT></SPAN>
+We could also be more consistent with the naming schema of the
+functions.</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Tydemux is today relatively easy to
+thread, we have some &ldquo;main&rdquo; loops that is basically
+operating independently.</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace"> </FONT>
+</P>
+<UL>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">read_chunk, check_chunk, add_chunk,
+	check_junk_chunks</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">parse_chunk </FONT>
+	</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">tystream_init</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">repair_tystream</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">check_fix_video_pes_holder</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">fix_seq_header</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">check_fix_p_frame</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">check_fix_tmp_ref</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">check_fix_fields</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">check_fix_av_drift</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">check_audio_sync (done in the write
+	phase at the moment)</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">transcode_audio (not there yet)</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Any sub functions here that can be
+	threaded ??</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">remux (not there yet)</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">scan_ifo  (not there yet)</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">write output (not there yet well not
+	in the way it should be)</FONT></P>
+</UL>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace"> </FONT>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">As said the functions above operate
+independently &ndash; they are basically doing their work until a
+parameter halts them. They then wait until the next round in the big
+(real main) loop allows them to test again if they can do their
+specific task. </FONT>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">As it is today however the control
+mechanism to control when they should stop isn't there &ndash; hence
+if we fail in the check_fix_tmp_ref function tydemux will happily
+continue to all the tasks before that function hence we will cache
+e.g. chunks as we thought memory was free (well it's cheap but we
+still have limitations :) ). </FONT>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+<SPAN STYLE="font-weight: medium"><FONT FACE="Courier, monospace">The
+control mechanism for the read_chunk, check_chunk, add_chunk,
+check_junk_chunks, parse_chunk, tystream_init and repair_tystream</FONT></SPAN>
+functions are also in very bad shape and dates back to version 0.1 or
+something like that. They need to have control functions (if they
+should do they work or not) implemented in similar way as the e.g.
+the check_fix_field function. 
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+Discussion point :) - John suggested that we use pipes to shuffle
+data between each thread &ndash; I want to add that reading/writing
+in designated memory areas i.e. shuffle pointers between each thread
+is much better &ndash; (I'm the armature here so spank me :)). My
+reason is that mplex can very easily be modified to read from memory
+instead of files &ndash; and it's very easy to feed mplex the
+pointer. Hence we will only need a minimum of changes to allow mplex
+to run as a separate thread dealing with the muxing of our two or
+more ES streams. Isn't the point with threading that we share the
+same address space &ndash; if we use pipes then we can more or less
+fork or sub prosses which is not as graceful as threads.</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+Anyhow what is needed to be done is:</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+<BR>
+</P>
+<UL>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm">A way
+	of dealing with threads internally that is transparent regardless if
+	we use Windows or Unix threading (posix threads) &ndash; i.e. In the
+	same way as we today deal with e.g. file reading/writing.</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm">Control
+	functions so we don't have runaway threads</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm">Control
+	functions similar to check_fix_field so each function/thread halts
+	until he can start again.</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm">A way
+	of shuffle data between each function/thread</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm">Determine
+	how many threads we should have &ndash; we don't want to over kill
+	here and use more than we really need.</P>
+	<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm"> 
+	</P>
+</UL>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+Profiling, since we want to thread I suggest that we make a profiling
+of tydemux,tytranscode etc. This will enable us to do the right type
+of optimization of the code. If you have a Linux workstation I
+suggest using Valgrid/kcachgrid which is a very nice tool to do this
+with &ndash; please see &ldquo;appendix&rdquo;.</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">GUI front end acting both a editor
+and as a front end to the actual demuxing/remuxing operation:</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">(rewrite of initial mail from Olaf
+Beck)</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">How to implement a good GUI to edit
+cut points in a tystream. If you take a look at the TyStream document
+you will see that the header of each ty_packet_header has a
+seq_record_nr. If the record isn't set to 0x7fff then we have a
+video_sequence (SEQ) present in the chunk at the record that the
+number in the seq_record_nr indicates.</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+<SPAN STYLE="font-weight: medium"><FONT FACE="Courier, monospace">We
+know that after a ty_record_type 0x7e0 (SEQ) will follow a
+ty_record_type 0xce0 which is a GOP header. We also know that
+following that will be a ty_record_type 0x8e0 which is a MPEG
+I-Frame. There will also be a packet elementary stream header either
+before the SEQ (Tivo S2) or between the GOP and the I-Frame (Tivo
+S1). The PES header will give us the exact start/stop time between
+each GOP.</FONT></SPAN></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">The aforementioned is the key to fast
+and efficient indexing &ndash; why use separate indexing when the
+TyStream is already providing us with a perfect source to create a
+index of.  Anyways if we now have a struct like this (will be a bit
+more entries in it but it's a sketch)</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">typedef struct Gop_index_t
+gop_index_t;</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">struct Gop_index_t {</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 2.54cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">/* Chunk number of seq */</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 2.54cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">int chunk_number_seq;</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 2.54cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 2.54cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">/* Record number for SEQ */</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 2.54cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">int seq_rec_nr;</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 2.54cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 2.54cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">/* Chunk number of I-Frame */</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 2.54cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">int chunk_number_i_frame;</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 2.54cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 2.54cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">/* Record number of I-Frame */</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 2.54cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">int i_frame_rec_nr;</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 2.54cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 2.54cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">/* Temporal reference */</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 2.54cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">uint64_t time_of_iframe;</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 2.54cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 2.54cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">/* Access pointers */</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 2.54cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">gop_index_t * next;</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 2.54cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">gop_index_t * previous;</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 2.54cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">};</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">and a function like this </FONT>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">gop_index_t *
+scan_tystream(tysteam_holder_t * tystream);</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">What we get is a linked list holding
+the index of a tystream which is what we want.</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Now let us step through this:</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">The user opens the file in the editor
+- what we first do is probing the stream and find where the audio is
+starting. We are also finding out what seq/gop that we will start the
+video/audio stream with if we wasn't about to cut.</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Given that information we run the
+scan_tystream to create the index (this is a very fast operation
+since we only need to read either the two byte entry for the header
+and optionally say around 200 bytes of record info. I can't give you
+any real times but I did some tests and it's very fast i.e. More or
+less real time :). It should be fast since it's what Tivo is using to
+scan the stream when doing ffw fbw.</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Now we read the first entry in the
+index list. From it we get the chunk number. We read in three chunks
+from the starting chunk of the seq_header with a revamped read_chunk
+func (that is seeking and not as today need to be at the right
+location but instead takes a chunk number).</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Then we use the get_video func to
+fetch the I-Frame that is in rec_nr Y and in chunk X. We feed the
+payload_t:s payload_data to a mpeg2 video decoder and displays it to
+the user in the GUI. This can be done in real time so the user will
+not notice a big delay.</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Anyways - the good thing is that we
+know the chunk numbers of the cut, we know the times of the cut, and
+we know the exact seq number of the cut. Feeding this info to the
+cutpoint function and we will be home free to make extremely precise
+cuts in the stream. For the video cuts will use the SEQ info while
+the audio stream will use the times. The problem with using times for
+the video is that we need to take care about dangling B-Frames.
+B-Frames that is displayed before the I-Frame but decoded after the
+I-Frame is decoded. Display order is like this: B B I B B P while
+decoding order is like this: I B B P B B.</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">As for the GUI it self I suggest QT
+it's cross platform and it's a very solid toolkit (e.g. the whole of
+KDE see www.kde.org is built on it). I have some example code of a QT
+tiff viewer, it's using the same principle that we will use to
+display frames with although they use the tiff library and not the
+mpeg2 video library.  We naturally have to have code to scroll
+backwards and fwd, inserting cut points and so forth.</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Anyhow what is needed to be done is
+(besides writing the GUI):</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<UL>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm"><SPAN STYLE="font-weight: medium"><FONT FACE="Courier, monospace">A
+	scan function so we can create a index</FONT></SPAN> list that is
+	numbered (seq numbers)</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A get index XY function &ndash; that
+	is returning the image (either in mpeg format or in raw image
+	format) along with display time, chunk number etc i.e. info that the
+	user might benefit from.</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A revamped cutpoint function that
+	can take a index and a list of cutpoints (XY to YX i.e. seq numbers)
+	and transform that into a cut list.</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A revamped cutpoint_is_in_remove_cut
+	that handles times for audio and seq numbers for Video</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A revamped tystream_repair function
+	that handles sync offsets in a better style and adjusted for both
+	cuts and repairs</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A jdiner cut list to tydemux cut
+	list function</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A new reader/writer of our own cut
+	list format</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">High level functions to handle
+	reading, parsing, checking etc in a good way so that the GUI can do
+	the main demux/remux and cut of the tystream. </FONT>
+	</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Find a good (and especially fast)
+	mpeg2 video decoder lib</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Fucntions to set tystream parameters
+	from the GUI</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Stubs for the above functions as
+	soon as we can (yesterday if possible :)) - we need to start coding
+	the GUI.</FONT></P>
+</UL>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Support for the tytar format:</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Initially I suggest that we support
+this format in unpacked (i.e. you have untared the file). There is
+functions to read tar files directly but I think we should limit us a
+bit here &ndash; basically we have enough to do already. However we
+will need to solve the problem that the input file is in several
+parts. This is however very similar to VOB files on a DVD. </FONT>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">The good thing is that libdvdread
+already has the functions that we need to enable us to access the
+different &ldquo;tar&rdquo; parts as one big file. Hence supporting
+the tar file format should be easy (unless we want to opt to read the
+tar file directly).</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Anyhow what is needed to be done is:</FONT></P>
+<UL>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Incorporate libdvdread functionality
+	in order to access several parts as one big file.</FONT></P>
+	<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	</P>
+</UL>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Fix of all outstanding bugs:</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">There is a lot of outstanding bugs
+and issues in the code base today. A lot of it will be taken care of
+due to revamping of the code to provide functionality demanded of
+other parts in the project hence I have excluded those from the list
+below.</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<UL>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A reset of the PTS in the video
+	stream makes us totally bail out (have example stream). The PTS is
+	just a unsinged 33 bit integer hence it will turn around and we need
+	to deal with it (this is another reason why times are a bad thing in
+	a cut list).</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">If we have dual GOP:s in a seq,
+	tmp_ref checks will fail (we must make sure we have a seq with every
+	gop)</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Check seq not gop when we seek seqs
+	&ndash; currently we stop at both gops and seqs in a lot of our
+	functions</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Check progressive frame when adding
+	frames to correct sync</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Make a separate gop check when
+	seeking seqs &ndash; fix gops without seq</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Make a better solution when a the
+	last P frame is missing from a gop</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Check when getting highest tmp ref
+	in the next seq &ndash; this is a general check since I think I made
+	some mistakes here.</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A tmp_ref like this is valid: 2I 0B
+	1B 3P 6P 4B 5B yet check_tmp_ref is failing i.e. It says it's
+	invalid and we rebuild the gop like this 2I 3P 0B 1B 6P 4B 5B which
+	also is a valid tmp ref. However it's not as effective as the 2I 0B
+	1B 3P 6P 4B 5B  when it comes to decoder buffers hence we need to
+	fix it.</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">tmp_ref check when we have missing P
+	frames in the end is very experimental and we need to check it.</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Change all labs to llabs so they can
+	handle 64 bit ints</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Change all uint64_t to int64_t (PTS
+	time stamps and it's 33bit uint so a int64_t should be able to
+	handle it. This will make a lot of code more effective and we don't
+	need to worry that much &ndash; this clean up demands a lot of work
+	but it's defiantly worth it.</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Fixing repair tystream when handling
+	SA/UK repairs we cut way to much today &ndash; it will not work when
+	we start dealing with cuts</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Fixing repair tystream when handling
+	S2 SA video</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Enable support for S2 Dtivo (needs
+	fix in make_gop_closed)</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Fix start of S2 SA if we have jumped
+	into the stream &ndash; we will fail as it is now!</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Drop 1.3/1.5 support ?? Yes, I would
+	say will clean up the code and I will for sure not support fancy
+	things like e.g. cutting in a 1.3/1.5 stream.</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">We leek memory in the parse video
+	functions if we have gaps in the stream</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">We will need to have a much better
+	func to deal with times in the tmp_ref function</FONT></P>
+</UL>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">We also need our own private ftp/web
+site where we can store tystreams with different kind of errors as
+well as perfect streams of all the combinations out there.</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">  </FONT>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">As always the document is up for
+discussion &ndash; ahh one last thing we need to have a common code
+format otherwise it 1: Will not look good 2: Trouble to read each
+others code &ndash; take a look in the Hacking_Roules_Tips file
+present in the CVS top level tydemux dir &ndash; as said it's up to
+discussion but we will need to think something out.</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Links, books, documents etc:</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">MPEG:</FONT></P>
+<UL>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm"><SPAN STYLE="font-weight: medium"><FONT FACE="Courier, monospace">The
+	mpeg ISO 13818-X and 1172-X documents download from
+	</FONT></SPAN><A HREF="http://www.dealdatabase.com/forum/showthread.php?s=&amp;threadid=20056"><SPAN STYLE="font-weight: medium"><FONT FACE="Courier, monospace">http://www.dealdatabase.com/forum/showthread.php?s=&amp;threadid=20056</FONT></SPAN></A><SPAN STYLE="font-weight: medium"><FONT FACE="Courier, monospace">
+	they are all present as zip files just in the start of my thread</FONT></SPAN></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">A good overview is present in this
+	doc
+	<A HREF="http://www.tektronix.com/Measurement/programs/mpeg_fundamentals/index.html">http://www.tektronix.com/Measurement/programs/mpeg_fundamentals/index.html</A>#
+	- this page is also filled with nice info
+	<A HREF="http://www.tektronix.com/Measurement/programs/mpeg_fundamentals/index.html">http://www.tektronix.com/Measurement/programs/mpeg_fundamentals/index.html</A>#
+	</FONT>
+	</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Multi channel MPEG audio
+	<A HREF="http://www.stud.uni-siegen.de/sven.koelsch/mpeg2mc/index.html">http://www.stud.uni-siegen.de/sven.koelsch/mpeg2mc/index.html</A>
+	</FONT>
+	</P>
+</UL>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">AC3/a52:</FONT></P>
+<UL>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm"><SPAN STYLE="font-weight: medium"><FONT FACE="Courier, monospace">The
+	a52 std documentation 
+	</FONT></SPAN><A HREF="http://www.dealdatabase.com/forum/showthread.php?s=&amp;threadid=20056"><SPAN STYLE="font-weight: medium"><FONT FACE="Courier, monospace">http://www.dealdatabase.com/forum/showthread.php?s=&amp;threadid=20056</FONT></SPAN></A>
+	the doc is present for download as a zip file in the start of this
+	thread</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">liba52
+	<A HREF="http://liba52.sourceforge.net/M">http:</A><A HREF="../../">//liba52.sourceforge.net/</A>
+	(decoder)</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">ffmpeg (encoder)
+	http:<A HREF="../../">//ffmpeg.sourceforge.net/</A></FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">besweet (encoder see source page &ndash;
+	btw using ffmpeg code) <A HREF="http://dspguru.notrace.dk/">http://dspguru.notrace.dk</A>
+	</FONT>
+	</P>
+</UL>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">DVD:</FONT></P>
+<UL>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">DVD Demystified (must read) if you
+	want to  know DVD http:<A HREF="../../">//www.dvddemystified.com/</A>
+	 it's filled with good info </FONT>
+	</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">DVD FAQ (less interesting)
+	<A HREF="http://www.dvddemystified.com/dvdfaq.html">http://www.dvddemystified.com/dvdfaq.html</A></FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Technical details about DVD &ndash;
+	IFO format, PCI/DSI packet info <A HREF="http://members.aol.com/mpucoder/DVD">http://members.aol.com/mpucoder/DVD</A>
+	&ndash; NOTE there is errors in here so cross reference with
+	libifoedit / libdvdread</FONT></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm"><SPAN STYLE="font-weight: medium"><FONT FACE="Courier, monospace">libdvdread
+	</FONT></SPAN><A HREF="http://www.dtek.chalmers.se/groups/dvd/downloads.shtml"><SPAN STYLE="font-weight: medium"><FONT FACE="Courier, monospace">http://www.dtek.chalmers.se/groups/dvd/downloads.shtml</FONT></SPAN></A>
+	very nice source code if you want to know IFO:s</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">ogle very nice info if you want to
+	know about DVD navigation etc..
+	<A HREF="http://www.dtek.chalmers.se/groups/dvd/index.shtml">http://www.dtek.chalmers.se/groups/dvd/index.shtml</A>
+	</FONT>
+	</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">libdvdread &ndash;
+	http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/dvd-create/ifoedit/src/
+	</FONT>
+	</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">libdvdnav a must for dvd navigation
+	http:<A HREF="../../">//dvd.sourceforge.net/</A> </FONT>
+	</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">dvd-author crude dvd creation but
+	defintily worth a look http:<A HREF="../../">//dvd.sourceforge.net/</A>
+	</FONT>
+	</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm"><SPAN STYLE="font-weight: medium"><FONT FACE="Courier, monospace">MicroSoft
+	DirectX 7 has some really nice headers that is basically covering
+	the last unknown parts of DVD IFO info please mail olaf_</FONT></SPAN><A HREF="mailto:sc@yahoo.com"><SPAN STYLE="font-weight: medium"><FONT FACE="Courier, monospace">sc@yahoo.com</FONT></SPAN></A>
+	for more information</P>
+</UL>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">GUI Toolkit (QT):</FONT></P>
+<UL>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">Troll tech  a given perfect site
+	lots of info &ndash; well they are the company behind it. Note that
+	the free X11 version is 3.1.x and the free Win version is 2.x  so
+	some small steps need to be taken care of when writing the  code.
+	There is no native free version for MAC (it costs) but since Apple
+	has it's own X server we can just use the free X11 version. There
+	might alsp be someone out there with a comersial version of QT for
+	MAC that can compile a native version for us. Anyhow the link to
+	troll tech is <A HREF="http://www.trolltech.com/">http://www.trolltech.com</A>
+	</FONT>
+	</P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT FACE="Courier, monospace">QT Tiff viewer example code
+	http:<A HREF="../../">//qfaxreader.sourceforge.net/</A> </FONT>
+	</P>
+</UL>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Socket handling of tystreams:</FONT></P>
+<UL>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm">ffmepg
+	<A HREF="http://ffmpeg.sourceforge.net/">http://ffmpeg.sourceforge.net</A></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm">mplayer
+	<A HREF="http://ffmpeg.sourceforge.net/">http://ffmpeg.sourceforge.net</A></P>
+	<LI><P CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm">video
+	lan <A HREF="http://www.videolan.org/">http://www.videolan.org</A> 
+	</P>
+</UL>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Development tools:</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Valgridn advertisment &ndash; this is
+the best thing that has happened to Linux programming since sliced
+bread. It's has a similar functionality as Purify but with the extra
+advantage that you don't need to compile the sources with it. </FONT>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Just run &ldquo;valgrind your_prog&rdquo;
+and it will report every error your program is making along with all
+memory leeks that you have. Way cool I (Olaf) must say.</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Even better is that you can use a
+program called kcachegrind it is a extension to valgrind &ndash; and
+it lets you visualize the profiling data when you run a progam with
+valgrind hence you don't need to compile in profing support - Way
+cool I (Olaf) must say :).</FONT></P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">The link to valgrind is
+http://developer.kde.org/~sewardj/ and the link to   kcachegrind  is
+http:<A HREF="../../">//kcachegrind.sourceforge.net/</A> both sites
+holds extensive info about how to use the programs. </FONT>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<FONT FACE="Courier, monospace">Both programs is a must in any Linux
+programmers tool chest &ndash; it's even useful for Windows
+programmers if the code is cross platform as in tydemux case </FONT>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P CLASS="western" ALIGN=LEFT STYLE="margin-left: 1.27cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+</BODY>
+</HTML>

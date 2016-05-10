@@ -1,0 +1,175 @@
+
+TyStudio v0.5.0
+---------------
+
+TyStudio is a GPL'ed set of tools for extracting, editing, and converting
+of tivo tystreams to standard video/audio formats. This is done without
+re-encoding, so its a rather fast process. TyStudio is also entirely
+standards based; Every component of tystudio can be substituted with your
+favorite third party software (except tydemux of course).
+
+TyStudio is currently under heavy development. Future abilities of TyStudio
+will include streaming video strait from your tivo unit, as well as the
+direct conversion to DVD format, to include the necessary tools for making
+your own DVD menus, and everything else that you could possibly want out of
+a DVD. This would happen a lot faster if we had more developers to help,
+hint hint. :)
+
+Currently TyStudio is comprised of the following elements:
+
+    Conversion tools:
+    -----------------
+
+	- TyEditor: Currently the front end of TyStudio. From this tool,
+	    you can extract and edit your tystreams (or you can edit them
+	    without extracting), and pass all of the conversion options
+	    strait to the rest of the components in only a few steps.
+	
+	- TyDemux: This is the core of TyStudio; This program is what makes
+	    everything we do possible. For the most part, it converts tivo's
+	    proprietary tystream format to standard MPEG-2. It also corrects
+	    all types errors that are in the MPEG streams, from fixing holes,
+	    replacing missing video frames, to fixing sync problems. Even
+	    the worst MPEG stream errors, which tivo streams are full of,
+	    don't stand a chance against it.
+	
+	- TyProcess: <need documentation from author before I can accurately
+	    describe it>
+	
+	- TyTranscode: This tool handles all of the audio conversion. You
+	    can convert MPEG to AC3 (Dolby Digital), or vice versa. You can
+	    also change the sampling rates or bit rates of the audio as well.
+	    This tool is very valuable for making streams compatible with
+	    standard DVD, SVCD, or whatever other format you so desire.
+	    
+	- TyMplex: The final step in the conversion process. Once you have
+	    your tystream converted to your liking, it is rebuilt
+	    (multiplexed) into the format of your choice by this component.
+
+    Functional tools:
+    -----------------
+    
+	- TyIndex: This is an indexing daemon that runs on your tivo and uses
+	    its spare processing time to index your shows in advance. This
+	    way, you do not need to wait each time you want to index a stream,
+	    because its already been done for you.
+	
+	- TyServer: A daemon that silently runs on your tivo, awaiting requests
+	    by the other tools to list all of your recordings, get information
+	    about each recording, or directly extract any given recording.
+	    Unlike most programs that already do this, this one is written
+	    entirely in C. This means that it's faster, and more stable than any
+	    other software of this kind.
+	
+	- TyLS: This will communicate directly with the TyServer to get a
+	    listing of your current recordings.
+	
+	- TyGet: This tool downloads recordings on your tivo from TyServer.
+	
+	- TyChopper: This useful little tool allows you to cut up portions of
+	    a tystream in order to only send the bad portions of it (instead of
+	    the whole ensalada) to the authors for debugging so that they can
+	    fix the problem that your stream has for a future release.
+
+    Please see each tools respective documentation for more information.
+
+**** SPECIAL NOTE FOR PEOPLE USING JDINERS TYTOOL ****
+------------------------------------------------------
+
+Theres a bug with the method that tytool uses to extract tystreams from your
+tivo unit. Tystreams extracted with tytool are not guarenteed to work with
+tystudios components. This is through no action of our own. The reason why is
+because tytool extracted tystreams have a corrupt header, and therefore are not
+a 1:1 extraction of your video stream. It is possible that we will have a
+workaround for this later (and possibly a tool to repair this damage), but for
+the time being, there is none.
+
+How to Get TyStudio:
+--------------------
+
+TyStudio is made available in binary form on Linux (i386), Windows, and Mac OS
+X. If you want to port TyStudio to your favorite platform, the source code is
+available at http://www.sourceforge.net/projects/dvd-create/.
+
+The binary packages can be downloaded from our homepage at
+http://dvd-create.sourceforge.net/tystudio/
+
+Code structure:
+---------------
+
+* General comments:
+	The code is fairly well commented and should, at a glance, be
+	structurally understandable. The code is not written to be efficient
+	(high speed) but to be understandable, hence the high amount of
+	comments. Yes, it's not that beautiful from a programming perspective,
+	but what the heck, given it's this early in it's development.
+
+	It's a Linux/Windows/Mac application and it's endian aware, hence it
+	will probably compile and run just fine on any modern Unix or Unix like
+	platform. Porting help is very welcome, please see the help section.
+
+
+How you can help:
+-----------------
+
+
+* Spelling:
+	There are probably a ton of spelling errors in the code, Please help
+	with it if you want. Edit the code, and do a diff -u against the old
+	file, then send us the output. :)
+
+* Patches:
+
+	Please, if you send us patches, do so by using gnu diff (diff -u).
+
+* Debugging:
+
+	We naturally need as much debugging help as we can get :). Even if you
+	aren't a developer, you are still very helpful if you send bug reports!
+
+	Core dump :( if tydemux core dumps please get valgrind
+	( http://developer.kde.org/~sewardj/ ), and run valgrind ./tydemux ....
+	and send me the output in an e-mail.
+
+	Errors: Tydemux doesn't do the right thing, error in extracted steams,
+	etc.
+
+	Alt 1: Increase verbose level, then send us the output
+
+	Alt 2: Increase verbose level to find what chunk you error out on.
+	Do a "dd if=your_tystream of=error_stream bs=131072 skip="skippchunk +
+	chunk_nr" count=20" (you have to add the skipped chunk to the chunk_nr).
+	Attach the error_stream in an e-mail and send it to us.
+
+	Alt 3: You are a developer, find the bug and send us a patch via e-mail.
+	:)
+
+* Development:
+
+	All development help is highly welcome - In fact we have an anonymous
+	access CVS server up, see http://www.sourceforge.net/projects/dvd-create
+
+* TyStreams:
+
+	We need test streams - We're especially interested in DTivo Series 2 -
+	if you have any streams please upload them to
+	ftp://66.121.15.35/"Tivo version".
+
+BUGS/Glitches/ToDo:
+--------------
+
+      - Currently there is no series 2 tivo support, although it is planned to
+	come soon, we do not have any dev'ers who own these units to do the
+	porting.
+  
+      - There are known issues with audio sync when converting the audio to
+	44.1khz. This is being worked on, and its a high priority.
+  
+      - Tystreams extracted with jdiners tytool have a bug in them that
+	prevents the tydemux component from reading them correctly. It's known
+	how to fix it, but it's not currently one of our priorities.
+  
+      - No frame accurate editing. It will come with time, but it's not 
+	currently a priority. Meanwhile you can use non re-encoding frame
+	accurate software such as womble mpeg-vcr instead.
+

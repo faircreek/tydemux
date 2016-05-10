@@ -1,0 +1,36 @@
+TyTranscode:
+
+Tytranscode is used to convert audio files to different formats. Currently the it only
+accepts MPEG I layer II, and AC3 (aka Dolby Digital) encoded files. If you want to use
+any other format as your input file, you will need to use a different piece of software
+to convert it to a format supported by this version of tytransocde. To get a list of
+all of the available options, simply run tytranscode with no options. The current
+options at this time are listed below:
+
+    -i <infilename>  Specifies the input filename.
+
+    -d               Probe the stream, and only show the information about the audio
+                     stream. As each audio header is found, the format it's in will
+                     be displayed. No output filename is necessary with this option.    
+
+    -o <outfilename> Specifies the output filename (if necessary).
+    
+    -s <sampleRate>  Specifies the output sample rate. Default is 48000. Acceptable
+                     values for -s are: 32000, 44100 and 48000)
+                     
+    -m               Specifies MPEG I layer II output format.
+    
+    -a               Specifies AC3 (aka Dolby Digital) output format.
+                         
+    -b <bitRate>     Specifies the output bit rate. The acceptable values are different
+                     depending on the output format:
+                         
+                         MPEG Format: 32000, 48000, 56000, 64000, 80000, 96000,
+                         112000, 128000, 160000, 192000, 224000, 256000, 320000,
+                         and 384000. Default is 192000.
+                         
+                         AC3 Format: 32000, 40000, 48000, 56000, 64000, 80000, 96000,
+                         112000,128000, 160000, 192000, 224000, 256000, 320000, 384000,
+                         448000,512000, 576000, 640000. Default is 384000.
+
+    -h               Display these options.

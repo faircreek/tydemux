@@ -1,0 +1,568 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Win32)">
+	<META NAME="AUTHOR" CONTENT=" ">
+	<META NAME="CREATED" CONTENT="20021113;21284200">
+	<META NAME="CHANGEDBY" CONTENT=" ">
+	<META NAME="CHANGED" CONTENT="20030315;15511400">
+	<STYLE>
+	<!--
+		@page { size: 21.59cm 27.94cm; margin-left: 3.18cm; margin-right: 3.18cm; margin-top: 2.54cm; margin-bottom: 2.54cm }
+		P { margin-bottom: 0.21cm; page-break-before: auto }
+		P.western { font-family: "Courier", monospace; font-weight: medium }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US">
+<P CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm"><FONT FACE="Courier, monospace"><B>The
+TyStream</B></FONT></P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><FONT FACE="Courier, monospace">Description
+of the Tivo TyStream and possible algorithms to extract the
+multiplexed video and audio stream in such way that it later on can
+be multiplexed without loosing sync of audio and video.</FONT></P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><FONT FACE="Courier, monospace">Definitions:</FONT></P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><FONT FACE="Courier, monospace">f/s:
+Frames per second, number of frames per second in a MPEG video
+stream.</FONT></P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><FONT FACE="Courier, monospace">Abbreviations:</FONT></P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><FONT FACE="Courier, monospace">lsb
+least significant byte first e.g. 16 bit integer is stored as (hex)
+XX YY where YY most significant byte and XX the least (e.g. 256 is
+stored like this in ff 00 and 1024 would be stored like this 00 04). </FONT>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><FONT FACE="Courier, monospace">Unless
+otherwise noted all other values are stored with the most significant
+bit (note bit) first i.e. as you normaly would write numbers no
+matter binary, hex or ten based.</FONT></P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><FONT FACE="Courier, monospace"><B>Description
+of the TyStream</B></FONT></P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><FONT FACE="Courier, monospace">A
+TyStream is built up of integer number of packets. Each Ty
+packet(also called chunk)is 128kBytes in size, and contains a integer
+number of ty_record_headers containing information about the
+multiplexed MPEG video, MPEG audio|AC3 audio and Data payload in the
+ty_packet_payload. The ty_stream uses a proprietary multiplexing
+schema of publicly unknown format. </FONT>(Hence this document trying
+to describe it).</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">ty_stream(){</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">	for(i=0; i &lt;
+ty_stream_size/ty_packet_size; i++){</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">	  ty_packet()</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">					</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">	}</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">}</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><FONT FACE="Courier, monospace">ty_packet(){</FONT></P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">	ty_packet_header()</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">	for(j=0; j &lt;
+number_of_ty_records; j++){</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">			ty_record_header()</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">	}</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">	ty_packet_payload()</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">	stuffing_bytes()</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">}</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">ty_packet_header(){</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">	if(marker_bit_1 == 1)
+{</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		number_of_ty_records	
+ 	16 bits	lsb</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		seq_record_nr	[0-7]
+		8  bits 
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		marker_bit_1				1 
+bit</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		seq_record_nr	[8-14]		7
+ bits</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">	} else {</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		number_of_ty_records		8
+ bits</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		seq_record_nr 				8 
+bits</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		reserved					8  bit	</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		maker_bit_2				1  bit</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		reserverd					7  bits</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">	}</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">}</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">ty_record_header() {</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">	if(marker_bit_2 != 1)
+{</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		marker_bit_2				1 
+bit</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		ty_record_size				19
+bits</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		ty_record_type				12
+bits</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		tivo_stream_buffer_id		12
+bits</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		tivo_stream_buffer_offset	20
+bits</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		ty_time_stamp				64
+bits</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">	} else {</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		marker_bit_2				1 
+bit</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		reserved					3  bits</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		extended_data				16
+bits</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		ty_record_type				12
+bits</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		unknown_reserved			32
+bits</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		ty_time_stamp				64
+bits</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">	}</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">}</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">ty_payload() {</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">	ty_record_data	sum_of_all_record_size*
+bytes</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">}</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><FONT FACE="Courier, monospace">stuffing_bytes</FONT>()
+{</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">	while(ty_packet_size &lt;
+131072) {</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">			suffing_byte			8
+bits</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">	}</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">}</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><FONT FACE="Courier, monospace">ty_stream</FONT></P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><FONT FACE="Courier, monospace">The
+TyStream (file) holding all audio, video and data for a Tivo
+recording.</FONT></P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">ty_packet_size</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm"><FONT FACE="Courier, monospace">A
+tystream has N ty_packets each 131072 bytes in size. Hence
+ty_packet_size == 131072. (131072 == 128kB)</FONT></P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><FONT FACE="Courier, monospace">ty_stream_size</FONT></P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm"><FONT FACE="Courier, monospace">The
+file size of the ty_stream in bytes</FONT>.</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">ty_packet</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">An
+individual 131072 bytes sizes data packet holding video, audio and
+data multiplexed together. 
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">ty_packet_header	</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">Depending
+if the ty_stream is recorded by Tivo software revisions 1.3 or 2.0
+(and higher) the header of the packet is slightly different. If
+marker_bit_1 is set then it's a 2.0 or higher recording.</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">number_of_ty_records</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">Holds
+the total number of ty_records present in the ty_packet. 
+</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">seq_record_nr</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">Holds
+the record number of ty_record who has a payload that holds the start
+of a MPEG Video Sequence header. If no such ty_record is present in
+the ty_packet all bytes are set to 1.</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm"> 
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">ty_record_header</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">There
+are two types of record headers, one that has an additional payload
+in the present in the ty_payload and one that has the payload
+embedded in the record header it self (extended_data). If
+marker_bit_2 is set then the payload is embedded.</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">marker_bit_2</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">If
+set the the payload of the record is embedded in the header in the
+extended_data field.</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">ty_record_size</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">The
+size of the payload that the ty_record_header represents.</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">ty_record_type</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">Each
+ty_record_header has an associated ty_payload, the ty_record_type
+determines what type of data that is present in the ty_payload.  
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		ty_record_types
+listed in hex:</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">0x3c0:</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm">A
+MPEG PES header start code for a MPEG stream of MPEG  1 AUDIO type
+will start in the ty_record_data. NOTE: In a Dtivo TyStream this will
+be a MPEG1 PES header not a MPEG2 PES header.</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		0X9c0:</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm">A
+MPEG PES header start code for a MPEG stream of  AC3 audio type will
+start in the ty_record_data.</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">0X4c0:</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm">A
+MPEG 1 AUDIO Layer II header will start in the ty_record_data. (This
+record_type is up until today only reported in SA Tivo). 
+</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">0x2c0:</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm">A
+generic AUDIO payload is present in the ty_record_data. This
+ty_record can only follow after a 0x3c0, 0x4c0 or 0x9c0 ty_record. It
+holds the reminder of the payload from the previous ty_record. 
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">0x6e0:</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm">A
+MPEG PES header start code sequence for a MPEG stream of MPEG  2
+VIDEO type will start in the ty_record_data. (This record_type is up
+until today only reported in Series 1 Tivo).</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">0x7e0:</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm">A
+MEPG 2 VIDEO Sequence start code will start in the ty_record_data. 
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">0xce0:</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm">A
+MEPG 2 VIDEO GOP start code  will start in the ty_record_data.</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">0x8e0:</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm">A
+MEPG 2 VIDEO picture start code will start in the ty_record_data. The
+MPEG picture data will be a I-Frame.</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">0xae0:</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm">A
+MEPG 2 VIDEO picture start code will start in the ty_record_data. The
+MPEG picture data will be a P-Frame.</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">0xbe0:</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm">A
+MEPG 2 VIDEO picture start code will start in the ty_record_data. The
+MPEG picture data will be a B-Frame.</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">0x2e0:</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm">A
+generic MEPG 2 VIDEO payload is present in the ty_record_data. This
+ty_record can only* follow after a 0x8e0, 0xae0 or 0xbe0 ty_record.
+It holds the reminder of the payload from the previous ty_record. 
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">			*This is not yet
+confirmed!</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">0xe01:</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm">Closed
+Captions (CC), the payload is present in the extended_data field. 
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">		</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">0xe02:
+</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm">Extended
+Data Service (XDS), the payload is present in the extended_data
+field. 
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">0xe03:</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm">Tivo
+Ipreview ty_record. This is the ty_record responsible for the &quot;thumbs
+up&quot; during previews.</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">0xe04:</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm">UK
+??TeleText?? data - Not yet confirmed</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm">  
+</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">0xe05:</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm">UK
+??TeleText?? data - Not yet confirmed</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">0xe06:</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm">This
+is a Tivo data, it's used to carry things like e.g. the previews that
+you sometimes can get in your top Tivo menu.</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">0x000:</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm">This
+is a packet used by Tivo when Tivo didn't manage to encode on a SA /
+read the Transport Stream on a DTivo. It's a good indicator that we
+have serious damage in the stream. Tivo is simply dumping the data it
+manged to read into this record.   
+</P>
+<P CLASS="western" STYLE="margin-left: 3.81cm; margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">extended_data</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">ty_records
+having having maker_bit_2 set has it's 2 byte &quot;ty_record_data&quot;
+present in this field.  
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">tivo_stream_buffer_id</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">tivo_stream_buffer_id
+used internally in the Tivo*</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">tivo_stream_buffer_offset</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">Offset
+in the specified tivo_stream_buffer* 
+</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">ty_time_stamp</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">Timestamp
+scaled by 1e9 most propably used internally during e.g. fast forward
+of the video stream*</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">*Not
+yet confirmed</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">ty_payload</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">The
+ty_payload holds all the ty_record payloads multiplexed together. 
+</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">ty_record_data</P>
+<P CLASS="western" STYLE="margin-left: 2.54cm; margin-bottom: 0cm">A
+ty_record_data is the corresponding payload to a ty_record. The
+ty_record_data is a segment of the ty_payload of the size specified
+in the ty_record_size in the ty_record_header. The offset to from the
+start of the ty_record_data segment relative to the start of the
+ty_packet is 4 + 16 * nr_of_ty_records + <FONT FACE="StarSymbol">&#57522;</FONT>ty_record_size
+(ty_record_N -1). 
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><FONT FACE="Courier, monospace">stuffing_bytes</FONT></P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><FONT FACE="Courier, monospace">If
+the ty_packet is short of data i.e. the ty_payload ends before 131072
+bytes, the reminder of the packet will be filled with random data.</FONT></P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><B>Description of the
+Video, Audio and Data present in the a ty_packet</B></P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">The ty_packtet is a
+proprietary multiplexed MPEG-2 video/audio stream that can be best
+described as a mix between  a program and a transport stream with
+essential parts of the stream lacking.</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">MPEG Video present in
+the TyStream:</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">Even if the
+video(audio) stream is resembling a transport stream it's still very
+far from actually being one. There is no transport or program stream
+headers present in the TyStream. The higest level of MPEG packet
+header present is the PES packet header. 
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">As in a MPEG transport
+stream the size field present in the PES header measures zero. Hence
+there is way to measure the size of a individual PES video packet.
+The size used by Tivo is instead the size field present in the
+ty_record header.</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">Further more the PES
+video packet present in the TyStream only has the PTS time stamp
+present and there is no DTS time stamp present which is necessary for
+proper decoding. 
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">The PES packeting and
+sequence/gop &quot;packeting&quot; of the Tivo stream is also
+slightly different between the different Tivo software revisions,
+Tivo series, and Tivo Type</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">SA Tivo Series 1
+version 1.3:</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">Version 1.3 has only
+one PES packet per sequence/gop header. In other words you have the
+following sequence PES header, sequence header, gop header, video
+data (I, P and B frames), PES header and so on. All GOP's are open
+GOP's even the start GOP. The broken link is not enabled in the start
+GOP even if it should in order to comply with the MPEG-2 video
+standard.</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">  
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">SA Tivo Series 1
+version 2.x and higher:</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">Version 2.x (and
+higher) has one PES packet per I and B frame. PES packets holding B
+frames can also include P frames, sequence headers and gop headers. A
+video sequence can there fore look like this: PES header, B-Frame,
+sequence header, GOP header, PES header, I-Frame, PES header,
+B-Frame, PES header, B-Frame, P-Frame, and so on. All GOP's are open
+GOP's even the start GOP. The broken link is not enabled in the start
+GOP even if it should in order to comply with the MPEG-2 video
+standard.</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">DirecTV Tivo Series 1
+version 2.x and higher:</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">DTivo 2.x (and higher)
+has one PES packet per I, B and P frame. PES packets holding B frames
+can also include  sequence headers and gop headers. A video sequence
+can there fore look like this: PES header, B-Frame, sequence header,
+GOP header, PES header, I-Frame, PES header, B-Frame, PES header,
+B-Frame, PES header P-Frame, and so on. All GOP's are open GOP's even
+the start GOP. The broken link is not enabled in the start GOP even
+if it should in order to comply with the MPEG-2 video standard.</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">SA Tivo Series 2
+version 3.x and higher:</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">    
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">Series 2 has one PES
+packet per Sequence header, B and P frame. PES packets holding
+Sequence headers are also including GOP headers and I-Frames. All
+GOP's are open GOP's  with the exception of the first GOP which is
+closed. However the even if the first GOP is closed it's marked as
+open in the GOP header. 
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">DirecTV Tivo Series 2
+version 3.x and higher:</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">UPDATE: Have S2 Dtivo
+streams now and it's like a mix between S1 Dtivo and S2 SA :) tydemux
+is demuxing it properly if it has AC3 sound. Need to update this
+section.</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">At present time I have
+not yet got hold of a streams from a DirecTV Tivo series two. However
+since Tivo is using the DirecTV DDS MPEG stream and not encoding the
+stream it self. It should not be different from a Series 1 DirecTV
+Tivo, but I can't confirm until I got hold of streams from a Series 2
+DirecTV Tivo.</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">All:</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm">Noticeable is also the
+total lack of video sequence end codes, there should be one at least
+at  the end of the recording. 
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-bottom: 0cm"><B>Reference:</B></P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">ISO/IEC
+13818-1 MPEG 2 System Specification</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">ISO/IEC
+13818-2 MPEG 2 Video Specification</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">ISO/IEC
+11172-3 MPEG 1 Audio Specification</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">EIA-608
+Closed Caption/Extended Data Service Specification</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm">ATCS
+A/52A AC-3 Specification</P>
+<P CLASS="western" STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><BR>
+</P>
+</BODY>
+</HTML>

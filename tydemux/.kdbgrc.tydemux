@@ -1,0 +1,22 @@
+[Breakpoint 0]
+Enabled=true
+File=index_edit.c
+Line=1188
+Temporary=false
+
+[Breakpoint 1]
+Enabled=true
+File=index_edit.c
+Line=1200
+Temporary=false
+
+[General]
+DebuggerCmdStr=
+FileVersion=1
+ProgramArgs=\s-s 2 -i localsamples/DTivo/bato-missingframes-dtivo-25.ty -v out.v -a out.a
+TTYLevel=7
+WorkingDirectory=/home/olof/tivo-create/
+
+[Memory]
+ColumnWidths=80,0
+NumExprs=0

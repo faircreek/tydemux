@@ -1,0 +1,224 @@
+
+TyDemux 0.5.0
+-------------
+
+TyDemux is a program to demux video and audio streams from a Tivo TyStream, and
+repair all dammage and mpeg errors therein.
+
+Usage of TyDemux:
+-----------------
+
+tydemux -s [1/2] [options] -i tystream.ty -v output_video.mpg -a output_audio.ac3
+
+* Basic extraction:
+
+  tydemux -s 2 -i tystream.ty -v output_video.mpg -a output_audio.ac3
+
+  In this mode, you will demux a Tivo version 2.x or higher tystream
+  and get a nice progress meter and also some basic information about
+  the TyStream. Only real errors will be reported.
+
+  -s 2
+	-s 1 no longer supported, use tydemux 0.4.2 if you want to demux
+	Tivo version 1.3 streams.
+
+* Options:
+
+  NOTE: I have temporarily disabled debug, will be back some time in the future.
+
+  -d 0 to 9 - sets the debug level, 1 is the default level.
+
+	 0 == silent
+	 1 == major errors and progress
+	 2 == 1 + warnings
+	 3 == 2 + parse, check, write info for each chunk
+	 4 == 3 + record type of each record in the TyStream
+	 5 == 4 + 16 bytes of record data of each record in the TyStream
+	 6 == 5 + some more debugging info
+	 7 == 6 + everything
+	 8 == 7 + The whole record header printed in easy to read hex :)
+
+	 Note: 3 and above is very verbose and is not recommended unless
+	 you have problems, and are sending bug reports.
+
+	 Note: It can be nice to set the debug level to 2 since you
+	 will get information of skipped garbage chunks.
+
+  -c cutfile, a cut file created by TyEditor.
+
+  -h/-?  Prints a usage message.
+
+
+* Return codes:
+
+	Unix/Linux/MacOSX
+	tydemux returns 0 if successful, 1 if you made a usage error and 2 upon
+	error.
+	
+	WINDOWS:
+	tydemux returns the audio offset that has to be used when muxing the
+	video and audio files up on success, tydemux returns -1000 on error
+	and 1000 on usage error.
+
+
+Changelog:
+
+	0.1 Initial release.
+
+	
+	0.2 Initial Windows release + bug fixes.
+		NOTE: Compile it with MS Visual Studio 6.x.
+
+	0.2.1 Bugfix - Seq header.
+		- Me my dumber, looked for the seq header but never used it,
+			hence the extracted video ES stream didn't start with
+			00 00 01 b3 -> No muxing with e.g. mplex.
+
+		- Included sample program to extract samples of a TyStream
+			(if I know get a really good FTP server - my pipe
+			 looks a bit bad and people are loosing connections)
+
+	
+	0.3.0
+		Nearly total rewrite of the program.
+
+		- Totally new parsing and demuxing engine that will demux
+			even the most difficult streams.
+		- Will demux TyStreams created with Tivo version 1.3 and up.
+		- Will demux TyStreams created both with Tivo Series 1 and 2.
+		- Will repair damaged TyStreams - TyStreams can have big holes
+			and gaps, tydemux will detect those. Upon detection, it will
+			align video and audio in such way that there is little to no
+			loss in sync. Furthermore, tydemux will fix the start and end
+			of the hole or gap in such way that the video and audio content
+			doesn't deteriorate in quality.
+	0.3.1
+		- Fixed bug that can make tydemux core dump on truncated chunks
+			at the end of the TyStream. I.E. if the last chunk in the
+			TyStream is not properly extracted.
+		- Fixed bug that can make tydemux core dump when it encounters
+			invalid record types. Basically	freed the chunk, then printed
+			the data from the freed chunk. :(
+
+	0.4.0
+		Major update to tydemux.
+
+		New features are as follows:
+		- Large file support (files bigger than 2GB) on supported platforms.
+		- Check and fix of temporal reference.
+		- Correction of closed GOPs on Tivo Series 2 and 1.
+		- Frame correction if necessary (for under or overflow of frames).
+		- Check and correction of drift in A/V sync.
+
+		Fixes:
+		- Will detect Series 2 versus Tivo version 1.3 correctly.
+
+	0.4.1
+		New features are as follows:
+		- During the probe we will seek for the start of the chunk.
+		- Compensation for missing audio frames.
+		- Large file support under Windows.
+
+		Fixes:
+		- Fix of temporal reference check.
+		- Fix of temporal reference repair function.
+		- Fix of over flow repair.
+		- Fix of under flow repair.
+		- Fix of memory leak in get audio and video.
+		- Better detection of bad chunks.
+		- Fix of gap/repair indicator.
+
+	0.4.2
+		New features:
+		- Returns A/V sync offset under windows.
+		- Uses new -s switch for tivo version.
+		- BSD support - thanks, Kurt J. Lidl.
+
+		Fixes:
+		- Fix of close GOP when the SEQ is extremely short.
+		- Fixed a memory leak in read chunk during probe.
+		- Fixed the read chunk function - faulty detection of
+			record type due to memory error.
+		- Fixed read chunk 0x000 is a valid record.
+		- Fix of gap when chunk has no video.
+		- Fix of gap when pes has failure.
+		- Fix of repair function - don't abort when we fail.
+		
+	0.5.0
+		New features:
+		-Is now a lib and a small frontend program
+		
+		Lib: 
+		- More fixes to MPEG "fix/repairs".
+		- Fixes the GOP header SMTPE timestamp.
+		- Functions for remote indexing.
+		- Functions for remote retrival.
+		- Functions to extract images.
+		- Functions to make cuts.
+		- Plus a lot more :)
+
+More detailed description of the Version 0.5.0 milestone:
+---------------------------------------------------------
+
+* Demultiplex of video and audio (both MPEG and AC3/a52) from all Tivo
+  types made - SA Tivo Series 1, SA TIVO Series 2, DTivo Series 1 and
+  UK Tivo using software revision 1.3 and up. NOTE: DTivo Series 2 should
+  in principle be supported but I have not yet be able to obtain a TyStream
+  from it. Update: Yes, AC3 DTivo S2 is supported (lots of errors although
+  harmless - MPEG audio doesn't work).
+
+* Check and correction for when we have an overflow or underflow of frames.
+
+  * Overflow - This is more or less always a video sequence (GOP) header
+    and corresponding I frame that is actually missing. What happens
+    is that tydemux doesn't catch the SEQ/GOP, hence when we count frames
+    for the SEQ/GOP it looks like an overflow. Tydemux repairs this
+    problem by adding both SEQ, GOP, and I frame at the right location
+    of the stream.
+
+  * Underflow - This is when one or several B or P frames is missing from
+    the video sequence (GOP). Tydemux will repair this by inserting a B or
+    a P frame at the appropriate location in the stream.
+
+* Compensates for missing audio frames. This is usualy a single audio frame
+  that's missing, but sometimes larger parts can be missing as well.
+
+* Correction of A/V sync or drift in a TyStream. Tydemux will correct gradual
+  drift of A/V sync. Depending on the frame rate, tydemux will mend A/V drifts
+  of as little as 8ms, to as big as 20ms.
+
+* Correction of temporal reference, I.E. frames out of order. Tydemux will
+  detect any error in the temporal reference in a TyStream and mend all types
+  of temporal reference errors that can happen.
+
+* Audio probe. You don't need to worry about what type of audio a recording
+  has. Tydemux will probe the whole TyStream, determine audio type, and skip
+  to the first chunk that has that type of audio.
+
+* TyStream repair. Tydemux will repair the TyStream if it detects holes or gaps
+  in the stream. Up on detection of a hole or gap, tydemux will align the video
+  and audio in such way that there is either no or very little loss of sync.
+  Furthermore, tydemux will fix the start and end of the hole or gap in such
+  way that the video and audio content doesn't deteriorate in quality.
+
+* Tydemux minimizes the Audio/Video sync offset. At the end of the processing,
+  it will tell you the offset in milliseconds.
+
+* Large file support. Tydemux supports files over 2GB on platforms that support it.
+
+* Correction of GOP SMTPE timestamps.
+
+* Remote retrival/indexing.
+
+* Cutting of the TyStream.
+
+
+To do: (NOT UP TO DATE)
+-----
+
+0.6.0
+
+	Direct generation of single title DVD's ISO images
+
+
+and so on :)

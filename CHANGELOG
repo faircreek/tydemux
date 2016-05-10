@@ -1,0 +1,74 @@
+2003-01-26 Olaf Beck <olaf_sc@yahoo.com>
+	
+	Initial checkin of tydemux - it's based on tydemux 0.4.1
+	Initial checkin of tychopper
+	Initial checkin of tytranscode
+
+2003-02-01 Olaf Beck <olaf_sc@yahoo.com>
+	All files in tydemux/*
+
+	Merged fixes from 0.4.3
+	
+	Prepared main loop for threading
+	We now have get_chunk, get_pes_holders, tystream_init,
+	repair_tystream, check_fix_pes_holder_video and
+	write_pes_holders running basically independent of
+	each other. Next step is to make them signal
+	each other when to stop, halt and when we are 
+	finished and move main chunk counting so 
+	we can have while(1) loops.
+
+2003-02-14 Olaf Beck <olaf_sc@yahoo.com>
+	Added libs/dali 
+	Added toplevel Makefile
+
+	dali is decoding mpeg I frame
+	for our indexing
+	dali is also encoding our
+	decoded mpeg images to 
+	ppm images 
+
+	Warning there is still bugs
+	in the mpeg lib - the 
+	worst once are fixed but need
+	more time to debug it fully
+
+	new funcs in index_edit 
+	get_image will return
+	a ppm image if you
+	five it a gop_index
+	
+2003-02-14 John Barrett <johnbarretthcc@hotmail.com>
+	Threadlib:
+	Stats maintained on number of bytes read and written to the pipes
+	in preparation for some sort of combined progress indicator.
+	
+	New program: typrocess 
+	This is the controlling process that creates the pipes between
+	the modules and starts the modules up as threads.
+	Currently both mplex and transcode have been ported to this
+	environment and have been built and tested under windows.
+
+	VC6 project files have been updated to standardise the build
+	directory names:
+
+	New project files have been added to build threadlib, tymplex and
+	tytranscode as libraries
+
+	Changes to tytranscode:
+	Ability to build as a library or as a stand-alone program main()
+	has been moved to a separate file which is not included in the library
+	version. Input and output stream functions re-written to use pipes.
+	I have implemented a circular buffer on the input stream which is
+	topped up from the pipe when it runs out of bytes. There were lots
+	of associated changes elsewhere in the code.
+
+	Mjpeg:
+	I have removed all the mjpeg files and replaced them with a single 
+	.zip file containing the mjpeg tree. Unzip this file at the same
+	level as dvd_create.
+
+2003-02-16 John Barrett <johnbarretthcc@hotmail.com>
+	New common logging library added.
+	typrocess, tymplex and tytranscode switched to use the logging library
+	-pipe command added to typrocess

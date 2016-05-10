@@ -1,0 +1,278 @@
+BUILD:
+
+The build is more than messy at the time,
+
+First do a cd to libs and exec:
+make -f Makefile.tivo clean
+make -f Makefile.tivo
+
+Then do a cd ../tydemux and exec:
+make -f Makefile.tivo clean
+make -f Makefile.tivo
+
+Then cd to tyserver and exec:
+make clean
+make
+
+The tyserver and tyindex is now built and ready to use
+
+Installation:
+
+Ftp, tyserver, tyindex and show.tcl to the tivo place them in e.g. /var
+NOTE: You have to ftp in binary mode!!! i.e.
+ftp tivo
+
+cd /var
+bin
+put tyserver
+put tyindex
+put show.tcl
+
+
+
+
+Now telnet to the tivo and follow the instructions below:
+
+cd /var
+mkdir -p /var/index/index
+mv show.tcl tyserver tyindex /var/index
+chmod -R 777 index
+
+cd index
+./show.tcl
+
+
+If the last command faild then it's more then 100% sure that you
+have ^M:s in the file (Ctrl-M) due to the fact that you opened it
+in Windows. Remove the Ctrl-M with your favorite dos2unix command/
+coverter.
+
+You are now ready to start the tyindex and tyserver
+cd /var/index
+./tyserver
+./tyindex
+
+They are daemons so they will background - NOTE: The current debug
+version doesn't so you will need to telnet sessions to the TIVO and
+start tyindex and tyserver in each of them.
+
+NOTE: If you have a lot of recordings on your TIVO it can take a
+very long time to index them all the fist time. Do a ls in /var/index
+to see how many index files tyindex has created. NOTE: Please allow
+around 15 to 30 min for tyindex to index a new recording!
+
+
+Tyindex checks every 15min if it need to remove or add a index to the
+index cache. If so it will start a new index creation session and then
+again check (after 15min) if there is any to remove or add.
+
+
+Tyserver - tyserver is listing to port 1150 and will accept the commands
+listed below:
+
+	Commands are single lines ending in \r\n.
+
+	LITY\r\n 	list recordings
+	OPTY nnnn\r\n	open fsid nnnn
+	COTY\r\n	close fsid
+	SCTY nnnn\r\n	send chunk nnnn
+	CITY\r\n	create index
+	GITY nnnn\r\n	Get mpeg I-Frame nnnn
+	GSTY\r\n	Get SEQ header
+	PLTY\r\n	Send all chunks in fsid
+	EXIT		Exit and close server
+
+	Server response:
+	200 XXXXX - info of some sort
+	300 X.... - data will be sent on the next line
+	    0 == unknown about other wise stated amout of
+	    data in bytes.
+	400 XXXXX  - error and error string
+
+---------------------------
+
+LITY, will send you all recordings present on the tivo that you can
+edit or download remotly. You will need to exec this command at fist
+contact since the infomation is vital for further operation.
+
+An example output can look like below:
+200 Showdata
+300 0
+NumberOfEntries@ 18
+StartEntry@ 1
+RecObjFsid@ 1674323
+FSID@ 1708617,1708653,1708659
+State@ 1
+Year@
+AirDate@ 4/25/1994
+Day@ Sat
+Date@ 2/22
+Time@  3:00 am
+Duration@ 1:07
+Title@ Star Trek: The Next Generation:
+Episode@ Firstborn
+Episidenr@
+Description@ When Worf's son declares he will not become a warrior, a persuasive Klingon appears to him.
+Actors@ Patrick Stewart, Jonathan Frakes, Brent Spiner, LeVar Burton, Michael Dorn, Gates McFadden, Marina Sirtis, Wil Wheaton
+GuestStars@
+Host@
+Director@
+ExecProd@
+Producer@
+Writer@
+EndEntry@ 1
+StartEntry@ 2
+RecObjFsid@ 1674322
+FSID@ 1708598,1708602,1708611
+State@ 1
+Year@
+AirDate@ 3/21/1988
+Day@ Sat
+[snip]
+
+The information after the 300 line can be parsed with the
+parse_nowshowinig func in fsid.c
+
+What you at a minimum need is the RecObjFsid@ 1674323
+You will use this number to open the fsid/tystream with
+help of OPTY.
+
+---------------------------
+
+OPTY nnnn\r\n will open a RecObjFsid@ number that you have
+collected with LITY - NOTE that you can't closed
+the connection between a LITY and an OPTY. The server
+will free the fsid information that it hold and you
+have to start over again!
+
+When open a fsid the server will give you the vital
+probe infromation back so you can adjust e.g. tydemux
+to do the right type of demuxing of the stream that
+you are about to recive.
+
+200 Probing stream
+200 Probing finished
+200 Start chunk: 0
+200 Print probe
+200: Tivo Type
+300: 5
+DTIVO
+200: Series
+300: 1
+1
+200: Audio
+300: 3
+MPG
+200: Audio Size
+300: 0
+576
+200: Audio time
+300: 0
+2160
+200: Video Framerate
+300: 1
+4
+200: Number of chunks
+300: 0
+10170
+200 Print probe finshed
+
+
+As you can see it's a DTIVO series 1 recoding with MPEG Layer II
+audio - further more the Audi frame size is 576 and the number
+of ticks each audio frame will play is 2160. The frame rate
+is 29.97 f/s (4 - see mpeg specs). The total number of chunks
+avalible in the stream is 10170. Please see functions in probe.c
+in tydemux how to interpet and store this data.
+
+---------------------------
+
+COTY will close the fsid that you have currently open NOTE! It
+will not close the connection and you can open another fsid after
+you have closed the one that you have open.
+
+---------------------------
+
+SCTY nnnn will send chunk nnnn fron the currently open fsid
+example output
+
+200 Ok, here is the chunk
+300 131072
+"Chunk data"
+
+---------------------------
+
+CITY will create a index of a open fsid, you will need to use this
+function if you want to do remote editing of the stream. Example
+output
+
+200: Printing index
+
+300: 0
+NumberOfEntries@ 6318
+0
+0
+0
+9
+0
+10
+10387951
+4
+54
+4
+63
+4
+64
+10532095
+7
+56
+7
+65
+[snip]
+
+
+Please use parse_gop_index func to parse the data after the
+300 entry - it will create a gop index that you can use
+for your remote editing needs.
+
+---------------------------
+
+GITY nnnn, will send you a mpeg encoded I-Frame from gop-index nnnn
+in the file you have open !!NOTE: We start the counting of GOP
+indexes on 1 not 0 as otherwise usuall in C/C++!!!!!!
+example output
+
+200 Ok, here is the I-Frame
+300 28764
+"I-Frame data"
+
+---------------------------
+
+GSTY will send a mpeg sequence header from the currenlty open fsid
+example output
+200 Ok, here is the SEQ header
+300 3400
+"SEQ data"
+
+---------------------------
+
+PLTY will send all chunks from a open fsid as one big stream!
+example output
+200 Ok, here is the stream
+300 0
+"stream data"
+
+---------------------------
+
+EXIT will close the server connection.
+
+---------------------------
+
+NOTE: It's very important that you close the file and 
+that you close the server connection we will leek mem
+otherwise!!!
+
+NOTE: If you don't have a cached index or fsid info
+those operations will take a long time. Especiall
+the CITY that can take up to 10 min!!!!! Hence
+make sure that you have tyindex running!!!

@@ -1,0 +1,82 @@
+TyProcess:
+
+TyProcess is used to convert TySteam files to an MPEG program stream. TyProcess is essentially
+a wrapper for: TyDemux, TyTranscode, and TyMplex. TyEditor is using the library part of
+TyProcess, so TyProcess is more or less TyEditor without a GUI.
+
+You will need to read the documentation for TyDemux, TyTranscode and TyMplex before you
+start using TyProcess, as you will need to invoke switches for those programs through TyProcess.
+
+To get a list of all of the available command line arguments, simply run tytranscode with no
+parameters. The current commands/options at this time are listed below:
+
+
+Current commands are:
+
+	-mplex [{ mplex params }]	Sends commands to TyMplex.
+	
+	-tcode [{ transcode params }]	Sends commands to TyTranscode
+	
+	-demux [{ demux params }]	Sends commands to TyDemux
+
+NOTE: There is a space between { and the first/last char in the parameter.
+
+Current options are:
+
+	-d <loglevel>		Sets the logging level. Default is X
+	
+	-l <logfile>		Log to a file. By default, all logging goes to stderr.
+	
+	-la <logfile> 		Same as above, except the log file is appended to the previous
+				log instead of being overwritten.
+	
+	-pipe			Input and output from pipes, implies -demux and -mplex.
+	
+	-i <infile>		Tystream file that you want to read from.
+	
+	-o <outfile>		MPEG file that you want to create.
+
+	-ia <input audio file>	Filename of the audio elementary stream (e.g. .mp2) that you want
+				to read from.
+
+	-iv <input video file>	Filename of the video elementary stream (e.g. .mpv) that you want
+				to read from.
+	
+	-oa <output audio file>	Filename of the audio elementary stream that you want to create.
+	
+	-ov <output video file>	Filename of the video elementary stream that you want to create.
+	
+	-om <output mpeg file>	Filename of the MPEG stream that you want to create.
+
+Examples how to invoke TyProcess:
+
+typrocess -i infile.ty -o outfile.mpg  -mplex { -f 3 } -demux
+
+This will covert a TyStream to a standard MPEG program stream that will be playable in any
+MPEG player.
+
+typrocess -i infile.ty -o outfile.mpg  -mplex { -f 8 } -demux
+
+This will covert a TyStream to a DVD compliant MPEG program stream that will be playable in most
+DVD players. NOTE: The packets for DVD information are currently empty. You will need to use
+something like DVDauthor in order to turn this into something you can burn to a DVD.
+
+typrocess -i infile.ty -o outfile.mpg  -mplex { -f 4 } -demux
+
+This will covert a TyStream to an SVCD compliant MPEG program stream that will be playable in any
+SVCD player.
+
+typrocess -i infile.ty -o outfile.mpg  -mplex { -f 8 } -demux -tcode { -s 48000 -a }
+
+This will covert a TyStream to a DVD compliant MPEG program stream that will be playable in most DVD
+players. The audio channel will also be converted to 48kHz AC3 (Dolby Digital Sound) NOTE: The packets
+for DVD information are currently empty. You will need to use something like DVDauthor in order to turn
+this into something you can burn to a DVD.
+
+typrocess -i infile.ty -o outfile.mpg  -mplex { -f 8 } -demux { -c mycutfile.cut } -tcode { -s 48000 -a }
+
+This will covert a TyStream to a DVD compliant MPEG program stream that will be playable in most DVD
+players. The audio channel will also be converted to 48kHz AC3 (Dolby Digital Sound). The TyStream will
+also be cut according to the information carried in the file mycutfile.cut that you previously created
+with TyEditor. NOTE: The packets for DVD information are currently empty. You will need to use something
+like DVDauthor to turn this into something you can burn to a DVD.

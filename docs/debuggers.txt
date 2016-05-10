@@ -1,0 +1,32 @@
+
+These tools will allow you to extract and debug tystreams without having to actualy
+run TyStudio.
+
+    - TyLS: This program will give a listing of what is currently on your tivo.
+        You must have TyServer currently running on your tivo for this to work.
+       
+        You can use TyLS as follows:
+       
+        tyls -t <tivo ip address>
+    
+    - TyGet: This program will retrieve a tystream from your tivo based on an FSID that
+        is given to you by TyLS. Like TyLS, TyServer must be running on your tivo
+        for this to work.
+        
+        You can use TyGet as follows:
+        
+        tyget -t <tivo ip address> -o <filename to download to> -f <FSID from tyls>
+    
+    - TyChopper: This useful little tool allows you to cut up portions of a tystream
+        in order to only send the bad portions of it (instead of the whole ensalada) to
+        the authors for debugging so that they can fix the problem that your stream has in
+        a future release.
+
+        Although chunk numbers are passed as parameters, the chopping is not precise enough
+        to guarantee that the chop will happen at that chunk. In particular, any header
+        information in the .ty file will throw things off. Therefore, chop well before and
+        after the suspect part of the stream.
+        
+        Usage of TyChopper:
+        
+        tychopper <input filename> <start chunk> <end chunk> <output filename>

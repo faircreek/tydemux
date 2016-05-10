@@ -1,0 +1,26 @@
+objs=test.o threadlib.o
+
+
+CC=gcc
+CFLAGS=-g -Wall -W -O -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
+#CFLAGS=-g -Wall -W -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
+
+all:  test dali
+
+clean:
+	rm -f *.o ; rm -f test ; cd dali && make clean
+
+test: ${objs}
+	${CC} -pthread -o $@ ${objs} -lm
+
+%.o: %.c
+	${CC} ${CFLAGS} -c $< -o $@
+
+SUBDIRS = dali
+
+.PHONY: subdirs $(SUBDIRS)
+
+subdirs: $(SUBDIRS)
+
+$(SUBDIRS):
+	$(MAKE) -C $@

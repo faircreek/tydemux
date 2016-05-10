@@ -1,0 +1,20 @@
+objs=bit.o buffer.o chunk.o chunk_check.o chunk_check_junk.o chunk_help_functions.o chunk_parse.o chunk_read.o chunk_verify.o debug.o frame_rate.o getopt.o gop.o misc.o pes_holder.o pes_holder_insert.o pes_holder_video_check.o pes_holder_video_check_help.o picture.o probe.o seq_frame_correction.o seq_header_fix.o sync_drift.o time.o tmp_ref.o tmp_ref_check.o tmp_ref_fix.o tmp_ref_help.o tydemux.o tyrecord.o tystream.o tystream_init.o tystream_repair.o cutpoints.o index_edit.o vstream.o
+
+CC=gcc
+COPT=-g  -Wall -W
+CDEF=-D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -D_ISOC99_SOURCE
+#CFLAGS=$(COPT) $(CDEF) -I../libs/dali/include
+CFLAGS=$(COPT) $(CDEF) -I../libs/mpeg2dec/include/
+
+all:  clean tydemux
+
+clean:
+	rm -f *.o
+
+tydemux: ${objs}
+	${CC} -o $@ ${objs} ../libs/mpeg2dec/libvo/libvo.a ../libs/mpeg2dec/libmpeg2/.libs/libmpeg2.a  
+
+%.o: %.c
+	${CC} ${CFLAGS} -c $< -o $@ -DMPEG2DEC 
+
+

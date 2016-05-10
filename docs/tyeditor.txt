@@ -1,0 +1,145 @@
+TyEditor
+--------
+
+TyEditor can be used to edit both local TyStreams and TyStreams still present on
+your tivo. (provided of course that you have the tyserver package installed on
+your tivo)
+
+Getting started
+---------------
+
+To load a local TyStream, either click on "Click here to load a local TY file", or
+choose "File | Open ty file". This will bring up a file open dialog, where you can
+point and click to choose your TyStream.
+
+When you click ok, the tystream will be indexed. This can take anywhere from 30
+seconds to 2 minutes, depending on the size of your TyStream. When the indexing
+process is completed, you will see the first frame of the TyStream in the video window.
+
+You either can start editing your TyStream now, or if you want, you can process
+it to MPEG directly without editing (see below how to process to MPEG).
+
+Editing
+-------
+
+Directly under the video window you have a slider. If you drag the slider,
+you will move instantly either forward or backwards in the video stream. When you
+release the slider, the video window will show the frame you selected with the slider.
+
+If "Frame Mode" is checked:
+When you click on the ">", you will move exactly one frame (gop) forward. When you click
+"<", you will move one frame (gop) backwards. When you click on the ">>", you will move
+exactly ten frames (gops) forward. Likewise, you will move ten frames backwards when you
+click "<<".
+
+If "Frame Mode" is unchecked:
+The editor will act as a TySteam "player". To play forward click ">", and to play backwards
+click "<". To fast forward, click ">>", and likewise, to fast backwards click "<<". Click
+"||" to stop.
+
+No matter what frame mode you are in, if you click on the ">|", you will move to the
+end of the video stream, and if you  click on the "|<", you will move to the beginning.
+
+Use the "Play Speed" slider to control the speed of the playback. If you have the slider to
+the far right at the same time as ">" is clicked, the TyStream will be played back at normal
+speed. If you slide the slider to the far left, the playback will be slowed down. However,
+since the slider is also affecting fast forward and fast backward, you have to adjust this to
+your liking. NOTE: When "Frame Mode" is checked, this slider has no effect.
+
+If you look between the video window and the cut list window, you will see two buttons:
+"cut start", and "cut end". We will use them to make a cut. Locate a frame where you want to
+start your cut, and click on "cut start". You will now see an entry for it in the cut list.
+Now we need to close this cut, so locate the frame where you want your cut to end, and click
+"cut stop". You have now made a cut. If the cut is invalid (e.g. it stops before it ends),
+you will see that your cutpoints in the list are red, and you will need to correct this.
+
+To do this, click on the red cut entry in the list, then click "Remove Selected". This will
+remove your cut from the list. If you want to start over, you can simply click "Remove All",
+and all of your cut entries will be removed.
+
+If you have a done lot of editing, it can come in handy to locate where in the recording
+your cuts start or stop. You can do that by selecting a cut item, and click on "Locate".
+The video window will now display this frame, and the slider will move accordingly.
+
+It can at times be handy to save the cut list (i.e. the cut items in your cut window) if you
+do a lot of editing. You can do that by choosing "File | Save Markers (As)". Likewise, you
+can load a cut file by using "File | Open Markers". Furthermore, after saving, you can do a
+"File | New Marker File". This will clear all items from the cut window.
+
+While editing, it can be useful to see the frame (chunk) number of the frame, instead of the
+default time counter in the video window. To switch to see the frame number, choose "View |
+Frame Counter". You can switch back by using "View | Time Counter".
+
+Processing
+----------
+
+We are now finished with our editing tasks, and we will now process and convert the TyStream
+into either two MPEG elementary streams (raw video/audio) or to an MPEG program stream, which
+is a stream that you can play in any MPEG player.
+
+Depending on what type of Tivo you have, and what your final purpose is, you will need to make
+the appropriate settings in "Video To" and "Audio To" drop down lists.
+
+Video to:
+
+	Generic MPEG2: This is an MPEG program stream, which is playable by any software, and
+	most hardware MPEG players. Regardless of Tivo type, set "Audio to" to "No Transcoding".
+
+	DVD: This is an MPEG program stream that is DVD compliant. If you have an SA/UK Tivo,
+	you will need to set the "Audio to" to either "DVD" or "AC3 DVD". The AC3 option is
+	recommended if you have a DVD player that is only capable of playing AC3 audio. You will
+	need to test it. If you have a DirecTv Tivo, you should set "Audio to" to "No
+	Transcoding". However, if you have problems playing MPEG audio on your DVD player, you
+	might want to set it to "AC3 DVD". To check what audio is present in the TyStream, go to
+	"View | Log File". In the very start you will see: "Audio Stats:". This will tell you what
+	type of audio is present in the TyStream you are about to convert. If it's already AC3,
+	you should always set "Audio to" to "No Transcoding"!
+
+	SVCD: This is an MPEG program stream that is SVCD compliant. You will need to set
+	"Audio to" 44100 regardless of your Tivo model!
+
+	Elementary Stream: This will produce one raw video file and one raw audio file. You will
+	most likely use this if you want to edit the files separately in another program, such as
+	a DVD authoring program. You might want to transcode the audio - please see the DVD/SVCD
+	notes above for hints in regards to this.
+
+Audio to:
+
+	Please see the "Video To" paragraph for how to set audio, since they depend on each other.
+
+
+After making your settings in "Video to" and "Audio to", click on "Process". This will bring up a
+file dialog where you will choose the name of the file you want to save the converted TyStream as.
+If you have set "Video out" to Elementary Stream, the file dialog will open a second time, asking
+you for the name of the audio output file.
+
+
+Editing/Processing of remote TyStreams:
+
+NOTE: YOU WILL NEED TO HAVE THE TYSERVER PACKAGE INSTALLED ON THE TIVO TO DO THIS!!!!
+
+If you click on "Click here to load from Now Showing", or "File | Open Now Showing", you will be
+presented with a list of available recordings on your Tivo. NOTE: If the hostname of your Tivo isn't
+"tivo", you will need to type either the IP address, or the hostname in the "Tivo Hostname...."
+field, and click "refresh".
+
+!!!VERY IMPORTANT!!! - in the far left of the Now Showing list, you will see a column for Index.
+If index is set to "No" for the stream you want to edit, then DON'T EVEN THINK ABOUT DOING REMOTE
+EDITING - instead, check the "Copy to PC First", and then click okay.
+
+Now, select a recording that you want to edit. NOTE: IF YOU WANT TO EDIT THE RECORDING, IT MUST HAVE
+INDEXED SET TO YES. Next, click ok. The tivo will now transfer the index records and other TyStream 
+statistics (not the whole stream) to TyEditor. After about 15 seconds or so, you will see the
+first frame appear, just as it does when you edit local files.
+
+You can now edit the file as usual - it's a tad slower to get the pictures, so you may need to be a
+bit more patient. (this could be fixed eventually)
+
+If you don't want to edit the file remotely, please check "Copy to PC first". This will download the
+file to your PC, and you can either save it for future use, or edit it as usual.
+
+
+Known bugs and limitations in TyEditor/TyStudio 0.5.0 beta 2:
+
+The Cut Stop will not also cut the frame you chose as stop frame,
+the frame that is the actual stop frame is the frame after the cut stop!
